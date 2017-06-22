@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/WEB-INF/Template/users.xhtml">
+	
+	<ui:define name="conteudo">
+		
+		<p:dialog modal="false" widgetVar="statusDialog" header="Cadastro de usuário" draggable="true" closable="false">
+		 	
+	 <h:form id="frm">
+   
+    <p:panel header="Informações">
+         
+        <p:messages id="messages"  autoUpdate="true" closable="true" />
+ 
+ 		        <h:panelGrid columns="4" cellpadding="5">
+		            <h:outputLabel for="name" value="Nome:" />
+		            <p:inputText id="name" value="#{usuario.nome}" label="Name"/>
+		            <p:message for="name"/>
+		            <h:outputText value="#{usuario.nome}" />
+		            
+		          	<h:outputLabel for="login" value="Email:" />
+		            <p:inputText id="login" value="#{usuario.login}" label="Email"/>
+		            <p:message for="login" />
+		            <h:outputText value="#{usuario.login}" />
+		            
+		            
+		            <p:outputLabel for="type" value="Tipo:" />
+			        <p:selectOneMenu id="type" value="#{usuario.type}" style="width:155px">
+			            <f:selectItem itemLabel="Selecione" itemValue="" />
+			            <f:selectItem itemLabel="Usuário" itemValue="U" />
+			            <f:selectItem itemLabel="Administrador" itemValue="A" />
+			        </p:selectOneMenu>
+			        <p:message for="type" />
+		            <h:outputText value="#{usuario.type}" /> 
+  
+		            
+		            <h:outputLabel for="senha" value="Senha:" />
+       				<p:password id="feedback" value="#{usuario.senha}" feedback="true" />
+		            
+		        </h:panelGrid>
+		        	<hr />
+		        <h:commandButton  value="Salvar" icon="ui-icon-check" validateClient="true">
+		        
+		        <f:ajax event="click" execute="frm" render="lista-usuario" listener="#{usuarioBean.inserir(usuario)}" />
+		        
+		        </h:commandButton>
+		        	| 
+		        <h:link onclick="hideStatus()">
+					<h:outputText value=" Cancelar" />
+				</h:link>       
+		
+	     </p:panel>
+		
+		</h:form>
+				
+			 
+		</p:dialog>  
+		
+		
+		
+		<p:toolbar>
+			<p:toolbarGroup align="left">
+			 <p:commandButton type="button" value="Novo" icon="ui-icon-plus" onclick="showStatus();" />
+			</p:toolbarGroup>
+
+ 		</p:toolbar>    
+   
+   		
+		<h:form id="lista-usuario">
+		<p:growl id="msgs" showDetail="true"/>
+		
+		<p:dataTable value="#{usuarioBean.listar()}"  
+					 var="usuario" 
+					 rowKey="#{usuario.nome}" 
+					 paginator="true" rows="20"
+					 editable="true"
+					 >
+					 
+	   <p:ajax event="rowEdit" listener="#{usuarioBean.inserir(usuario)}" process="@all"  update="@this"  />
+       <p:ajax event="rowEditCancel" listener="#{usuarioBean.remove(usuario.id)}" process="@all"  update="@this"  />			 
+		
+		<p:column style="text-align:center" headerText="ID: " width="50" sortBy="#{usuario.id}" filterBy="#{usuario.id}">
+			#{usuario.id}
+		</p:column>
+		
+		<p:column  headerText="Nome: " width="250" sortBy="#{usuario.nome}" filterBy="#{usuario.nome}">
+						
+			<p:cellEditor>
+				<f:facet name="output"><h:outputText value="#{usuario.nome}" /></f:facet>
+			    <f:facet name="input"><p:inputText  value="#{usuario.nome}" style="width:100%"/></f:facet>
+			</p:cellEditor>
+			
+		</p:column>
+		
+		<p:column  headerText="Tipo " >
+			
+			<p:cellEditor>
+				<f:facet name="output"><center><h:outputText value="#{usuario.type}" /></center></f:facet>
+			    <f:facet name="input">
+			      
+			    <p:selectOneMenu id="type" value="#{usuario.type}" style="width:100%">
+			            <f:selectItem itemLabel="Selecione" itemValue="" />
+			            <f:selectItem itemLabel="Usuário" itemValue="U" />
+			            <f:selectItem itemLabel="Administrador" itemValue="A" />
+			    </p:selectOneMenu>
+			    
+			    
+			    </f:facet>
+			</p:cellEditor>
+			
+		</p:column>
+		
+		<p:column headerText="Login " >
+		
+		    <p:cellEditor>
+				<f:facet name="output"><h:outputText value="#{usuario.login}" /></f:facet>
+			    <f:facet name="input"><p:inputText  value="#{usuario.login}" style="width:100%"/></f:facet>
+			</p:cellEditor>
+			
+		</p:column>
+		
+		<p:column style="text-align:center" headerText="Senha " >
+			<p:cellEditor>
+				<f:facet name="output"><h:outputText value="*********" /></f:facet>
+			    <f:facet name="input"><p:password id="feedback" value="#{usuario.senha}" feedback="true"/></f:facet>
+			</p:cellEditor>
+		</p:column>
+		
+	   <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+		
+<!-- 		<p:column style="text-align:center" headerText="Ações " > -->
+<!-- 			<p:button  icon="ui-icon-pencil" title="Editar"> -->
+<!-- 			    <f:param name="productId" value="30" /> -->
+<!-- 			</p:button> -->
+<!-- 			 &nbsp; -->
+<!-- 			<p:commandButton  update="@form" icon="ui-icon-trash" action="#{usuarioBean.remove(usuario.id)}"> -->
+<!-- 			    <f:param name="productId" value="30" /> -->
+		 
+<!-- 			</p:commandButton> -->
+			
+<!-- 		</p:column> -->
+		
+		
+			
+		
+		</p:dataTable>
+		</h:form>
+		
+	</ui:define>
+	
+	
+	</ui:composition>
+</html>

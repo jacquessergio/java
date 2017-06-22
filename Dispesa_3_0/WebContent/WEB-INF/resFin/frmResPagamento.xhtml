@@ -1,0 +1,70 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui">
+  
+		 <!-- START - RESUMO PAGAMENTO -->
+		 	<h:form id="resumo-pg">
+		 	
+		 	  <p:growl id="msgs" showDetail="true"/>
+		 	
+		    	<p:dataTable id="pg" var="pg" value="#{pagamentoBean.listaMes()}" editable="true" >
+				   
+				   
+				   <p:ajax event="rowEdit" listener="#{pagamentoBean.inserir(pg)}" process="@all"  update="@this"  />
+			       
+			       <p:ajax event="rowEditCancel" listener="#{pagamentoBean.remove(pg.id)}" process="@all"  update="@this" />
+					
+						
+					<f:facet name="header">+Pagamento(s)</f:facet>
+				
+					<p:column  headerText="Data"  >
+									
+						<p:cellEditor>
+							<f:facet name="output">
+							
+							 <h:outputText value="#{pg.data}">
+								<f:convertDateTime pattern="dd/MM" />
+							</h:outputText>
+							
+							</f:facet>
+						     <f:facet name="input">
+						    	<p:calendar id="popup2" value="#{pg.data}" pattern="yyyy-MM-dd"  mask="true"  />    
+						    </f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+					
+					<p:column  headerText="Valor" >
+									
+						<p:cellEditor>
+							<f:facet name="output"><h:outputText value="#{pg.valor}" /></f:facet>
+						    <f:facet name="input"><p:inputText styleClass="moeda" value="#{pg.valor}" style="width:100%"/></f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+				  
+				  <p:column >
+			           <p:rowEditor />
+			     </p:column>
+			     
+			      <p:columnGroup type="footer" >
+	                <p:row>
+	                    <p:column footerText="Total:" style="text-align:right"  />
+	                    <p:column footerText="#{pagamentoBean.somaMes()}"  />
+	                    <p:column footerText="" />
+	                </p:row>
+			      </p:columnGroup>
+				
+			</p:dataTable>
+			
+			</h:form>
+			<!-- FIM - RESUMO PAGAMENTO -->
+			
+			
+			
+</ui:composition>
+
+

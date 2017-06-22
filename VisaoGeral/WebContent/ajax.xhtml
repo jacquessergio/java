@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>AJAX</title>
+
+</h:head>
+
+<h:body>
+
+	
+	<h3><h:outputText value="#{ajax.nome}" id="nome" /></h3>
+	
+	<h:form id="frm">
+
+
+		<h:inputText value="#{ajax.nome}" />
+
+		<h:commandButton value="OK">
+			<f:ajax event="click" execute="frm" render="nome" listener="#{ajax.nom_completo()}" />
+		</h:commandButton>
+
+
+	</h:form>
+</h:body>
+
+</html>

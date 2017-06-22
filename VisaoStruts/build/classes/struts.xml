@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+	
+<struts>
+
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+	
+	<package name="default" extends="struts-default">
+		<action name="index">
+			<result>/Index</result>
+		</action>
+		
+	<action name="Teste" class="br.com.struts.aprendendo.TesteAction">
+		<result name="success">/res_ex1.jsp</result>
+	</action>
+	
+	<action name="AdicionaCarro" class="br.com.struts.actions.AdicionaCarroAction">
+		<result name="success">/Lista.jsp</result>
+	</action>
+		
+	</package>
+	
+	
+	
+</struts>

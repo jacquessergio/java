@@ -1,0 +1,91 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui">
+ 
+ 
+		 <p:dialog modal="false" widgetVar="statusDialog" header="Cadastro de Dispesa" draggable="true" closable="false">
+		 	
+			 <h:form id="frm">
+		   
+		     <p:panel header="Informações">
+		         
+		        <p:messages id="messages"  autoUpdate="true" closable="true" />
+		 					
+		 					
+		 					
+		 		        <h:panelGrid columns="4" cellpadding="5">
+		 		        	
+		 		        	<h:outputLabel for="id" value="Id:" />
+				            <p:inputText id="id" value="#{dispesa.id}" styleClass="numero"  label="id"/>
+				            <p:message for="id"/>
+				            <h:outputText value="#{dispesa.id}" />
+		 		        	
+		 		        
+				            <h:outputLabel for="name" value="Dispesa: (Ex. cartão de Crédito)" />
+				            <p:inputText id="name" value="#{dispesa.nome}" label="Name"/>
+				            <p:message for="name"/>
+				            <h:outputText value="#{dispesa.nome}" />
+				            
+				          	<h:outputLabel for="valor" value="Valor / Valor Parcela(R$):" />
+				            <p:inputText id="valor" styleClass="moeda" value="#{dispesa.valor}"   label="Valor" />
+			           
+				            <p:message for="valor" />
+				            <h:outputText value="#{dispesa.valor}" />
+				            
+				            
+				            <h:outputLabel for="popup" value="Data do pagamento /ou 1º parcela:" />
+				            <p:calendar id="popup" value="#{dispesa.data_inicial}" pattern="yyyy-MM-dd"  mask="true" label="Data" />
+				            <p:message for="popup" />
+				            <h:outputText value="#{dispesa.data_inicial}" />
+				            
+				            
+				            <p:outputLabel for="type" value="Dispesa parcelada?:" />
+					        <p:selectOneMenu id="type" value="#{dispesa.parcelado}" style="width:155px">
+					            <f:selectItem itemLabel="Selecione" itemValue="" />
+					            <f:selectItem itemLabel="Sim" itemValue="true" />
+					            <f:selectItem itemLabel="Não" itemValue="false" />
+					        </p:selectOneMenu>
+					        <p:message for="type" />
+				            <h:outputText value="#{dispesa.parcelado}" /> 
+				            
+				            
+				            <h:outputLabel for="num" value="Nº de Parcelas:" />
+				            <p:spinner id="num" value="#{dispesa.num_parcelas}"  label="Num"  />
+				            <p:message for="num" />
+				            <h:outputText value="#{dispesa.num_parcelas}" />
+				            
+				            <h:outputLabel for="val" value="Valor Total Parcelas (R$):" />
+				            <p:inputText id="val" styleClass="moeda" value="#{dispesa.val_parcelas}" label="Val" />
+				            <p:message for="val" />
+				            <h:outputText value="#{dispesa.val_parcelas}" />
+				            
+				            <h:outputLabel for="des" value="Descrição:" />
+				            <p:inputTextarea id="des" value="#{dispesa.descricao}" label="Des" rows="5" cols="30"></p:inputTextarea>
+				            <p:message for="des" />
+				            <h:outputText value="#{dispesa.descricao}" />
+				            
+					            
+				        </h:panelGrid>
+				        	<hr />
+				        <h:commandButton  value="Salvar" icon="ui-icon-check" validateClient="true">
+				        
+				        <f:ajax event="click" execute="frm" render="@this lista-dispesa total-dispesa saldo-banco" listener="#{dispesaBean.inserir(dispesa)}" />
+				        
+				        </h:commandButton>
+				        	| 
+				        <h:link onclick="hideStatus()">
+							<h:outputText value=" Fechar" />
+						</h:link>       
+				
+			     </p:panel>
+				
+				</h:form>
+				 
+		</p:dialog>
+		
+</ui:composition>
+
+

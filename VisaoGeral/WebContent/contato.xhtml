@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+
+	<title>JSF</title>
+
+</h:head>
+
+<h:body>
+
+	<h1>Contato</h1>
+	
+
+	
+	<h:form>
+	
+ 	<h:panelGrid columns="2">
+	
+
+		<h:outputLabel value="Nome: " for="nome" />
+		<h:inputText value="#{contato.nome}" id="nome" />
+
+		<h:outputLabel value="Email: " for="email" />	
+		<h:inputText value="#{contato.email}" id="email" />
+		
+		<h:outputLabel value="Telefone: " for="telefone" />
+		<h:inputText value="#{contato.telefone}" id="telefone" />
+		
+		<h:outputLabel value="Sexo: " for="sex" /> 
+		<h:selectOneMenu value="#{contato.sex}" id="sex">
+			
+			<f:selectItems value="#{contato.sexo.keySet()}"
+						   var="sexo"
+						   itemLabel="#{sexo}"
+						   itemValue="#{sexo}"
+	 		/>
+		
+		</h:selectOneMenu>
+		
+		<h:outputLabel value="Assunto: " for="ass" />
+		<h:selectOneMenu value="#{contato.ass}" id="ass">
+		
+			<f:selectItems value="#{contato.assunto.keySet()}"
+						   var="assunto"
+						   itemLabel="#{assunto}"
+						   itemValue="#{assunto}"
+							/>
+				
+		</h:selectOneMenu>
+		
+		<h:outputLabel value="Comentario: " for="comentario" />
+		<h:inputTextarea value="#{contato.comentario}" id="comentario" />
+		
+		<h:commandButton action="#{contato.forumlario()}" value="Enviar" />
+		
+		
+		
+			</h:panelGrid>
+		
+	</h:form>
+	
+
+	
+	
+
+</h:body>
+
+</html>

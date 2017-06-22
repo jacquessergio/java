@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/Template/main.xhtml">
+	
+	
+	<ui:define name="saude-finacneira">
+	
+		<div id="resumo-mes">
+
+		<!-- FORM RES PAGAMENTO -->	
+		<ui:include src="/WEB-INF/resFin/frmResPagamento.xhtml" />
+		
+		<hr />
+		
+		<!-- FORM RES INVESTIMENTO -->	
+		<ui:include src="/WEB-INF/resFin/frmResInvestimento.xhtml" />
+		
+		<hr />
+		
+		<!-- FORM RES POUPANÇA -->	
+		<ui:include src="/WEB-INF/resFin/frmResPoupanca.xhtml" />
+		 
+	
+	 	<hr />
+		 	
+		 	<p><b>+Dispesa no mês</b></p>
+			
+			
+			<h:form id="total-dispesa" >
+			<h:outputLabel value="&nbsp;&nbsp;Total(R$): " for="t-d" />
+		 	<h:outputText value="#{dispesaBean.somaMes()}" id="t-d">
+		 		<f:convertNumber pattern="#0.00" type="currency"/>
+		 	</h:outputText>
+		 	</h:form>
+		 	<hr />
+		 	
+		 	<p><b>+Saldo no Banco (PG.-DISP.)</b></p>
+			 <h:form id="saldo-banco">
+			 <h:outputLabel value="&nbsp;&nbsp;Total(R$): " for="t-b" />
+			 <h:outputText value="#{pagamentoBean.somaMes() - dispesaBean.somaMes()}" id="t-b">
+			 	 <f:convertNumber pattern="#0.00" type="currency"/>
+			 </h:outputText>	
+			 </h:form>
+			 <hr />
+		</div>
+	
+	</ui:define>
+	
+	
+	<ui:define name="conteudo">
+	
+		<!-- FORM PAGAMENTO -->	
+		<ui:include src="/WEB-INF/frms/frmPagamento.xhtml" />
+		
+		<!-- FORM INVESTIMENTO -->	
+		<ui:include src="/WEB-INF/frms/frmInvestimento.xhtml" />
+		
+		<!-- FORM POUPANCA-->	
+		<ui:include src="/WEB-INF/frms/frmPoupanca.xhtml" />
+		
+		<!-- FORM DISPESAS -->	
+		<ui:include src="/WEB-INF/frms/frmDispesas.xhtml" />
+	
+		
+			<h:form id="lista-dispesa">
+					<p:growl id="msgs" showDetail="true"/>
+					
+					<p:dataTable value="#{dispesaBean.listar(sessionScope.idUser)}" 
+								 var="dispesa" 
+								 rowKey="#{dispesa.nome}" 
+								 paginator="true" rows="20"
+								 editable="true"
+								 >
+								 
+				   <f:facet name="header">Controle de Dispesas #{data.setMes()}</f:facet>			 
+								 
+				   <p:ajax event="rowEdit" listener="#{dispesaBean.inserir(dispesa)}" process="@all"  update="@this"  />
+			       <p:ajax event="rowEditCancel" listener="#{dispesaBean.remove(dispesa.id)}" process="@all"  update="@this"  />			 
+					
+					<p:column style="text-align:center" headerText="ID: " width="50"  >
+						#{dispesa.id}
+					</p:column>
+					
+					<p:column  headerText="Tipo de Dispesa "  >
+									
+						<p:cellEditor>
+							<f:facet name="output"><h:outputText value="#{dispesa.nome}" /></f:facet>
+						    <f:facet name="input"><p:inputText  value="#{dispesa.nome}" style="width:100%"/></f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+					
+					<p:column  headerText="Valor à pagar(R$) " style="text-align:center">
+									
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{dispesa.valor}" >
+									<f:convertNumber currencySymbol="R$ " type="currency"/>
+								</h:outputText>
+							</f:facet>
+						    <f:facet name="input">
+						    	<p:inputText styleClass="moeda" value="#{dispesa.valor}" style="width:100%">
+						    		<f:convertNumber pattern="#0.00"/>
+						    	</p:inputText>
+						    </f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+								
+					<p:column  headerText="Parcelado " >
+						
+						<p:cellEditor>
+							<f:facet name="output"><center><h:outputText value="#{dispesa.parcelado}" /></center></f:facet>
+						    <f:facet name="input">
+						      
+						    <p:selectOneMenu id="type" value="#{dispesa.parcelado}" style="width:100%">
+						            <f:selectItem itemLabel="Selecione" itemValue="" />
+						            <f:selectItem itemLabel="Sim" itemValue="true" />
+						            <f:selectItem itemLabel="Não" itemValue="false" />
+						    </p:selectOneMenu>
+					    
+						    </f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+					
+					
+					<p:column  headerText="1º parcela ">
+									
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{dispesa.data_inicial}">
+									<f:convertDateTime locale="pt_BR" />
+								</h:outputText>
+							</f:facet>
+						    <f:facet name="input">
+						    	<p:calendar id="popup2" value="#{dispesa.data_inicial}" pattern="yyyy-MM-dd"  mask="true"  />
+						    </f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+					
+					<p:column  headerText="Uº parcela" >
+									
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{dispesa.data_final}">
+									<f:convertDateTime locale="pt_BR" />
+								</h:outputText>
+							</f:facet>
+						    <f:facet name="input">
+						    	<p:calendar id="popup" value="#{dispesa.data_final}" pattern="yyyy-MM-dd"  mask="true"  />
+						    </f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+					
+					<p:column  headerText="Nº parc." >
+									
+						<p:cellEditor>
+							<f:facet name="output"><h:outputText value="#{dispesa.num_parcelas}" /></f:facet>
+						    <f:facet name="input"><p:inputText styleClass="numero"  value="#{dispesa.num_parcelas}" style="width:100%"/></f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+					
+					<p:column  headerText="(R$)T. parc.">
+									
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{dispesa.val_parcelas}">
+									<f:convertNumber currencySymbol="R$ " type="currency"/>
+								</h:outputText>
+							</f:facet>
+						    <f:facet name="input">
+						    	<p:inputText styleClass="moeda"  value="#{dispesa.val_parcelas}" style="width:100%">
+						    		<f:convertNumber pattern="#0.00"/>
+						    	</p:inputText>
+						    </f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+					
+<!-- 					<p:column  headerText="Descrição"> -->
+									
+<!-- 						<p:cellEditor> -->
+<!-- 							<f:facet name="output"><h:outputText value="#{dispesa.descricao}" /></f:facet> -->
+<!-- 						    <f:facet name="input"><p:inputText  value="#{dispesa.descricao}" style="width:100%"/></f:facet> -->
+<!-- 						</p:cellEditor> -->
+						
+<!-- 					</p:column> -->
+						
+				   <p:column style="width:32px">
+			           <p:rowEditor />
+			       </p:column>
+						
+<!-- 						<p:ajax event="rowEdit" update=":lista-dispesas:@all"  /> -->
+					    					    
+					    <p:columnGroup type="footer">
+			                <p:row>
+			                    <p:column footerText="Total de dispesas à pagar:" style="text-align:right" colspan="2" />
+			                    <p:column footerText="(R$) #{dispesaBean.somaMes()}" style="color:red" />
+			                    <p:column footerText="" colspan="6" />
+			                </p:row>
+			            </p:columnGroup>
+						
+					</p:dataTable>
+					
+			
+					    
+					    
+			
+			</h:form>
+			
+			
+
+			
+		</ui:define>
+	</ui:composition>
+</html>

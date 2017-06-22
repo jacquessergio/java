@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/Template/detais.xhtml">
+	
+	<ui:define name="dashboard">
+	
+	<div id="dashboard">		
+		<h:outputLabel value="Dispes: " for="d" />
+		<h:outputText value="#{dispesaBean.somaAno('2017')}" id="d">
+			<f:convertNumber currencySymbol="R$ "  type="currency"/>
+		</h:outputText> 
+		
+		<hr />
+		
+		<h:outputLabel value="Pagam: " for="p" />
+		<h:outputText value="#{pagamentoBean.somaAno(2017)}" id="p">
+			<f:convertNumber currencySymbol="R$ " type="currency"/>
+		</h:outputText> 
+		
+		<hr />
+		
+		<h:outputLabel value="Investi.: " for="i" />
+		<h:outputText value="#{investimentoBean.somaAno('2017')}" id="i">
+			<f:convertNumber currencySymbol="R$ " type="currency"/>
+		</h:outputText> 
+		
+		<hr />
+		
+		<h:outputLabel value="Poupan: " for="c" />
+		<h:outputText value="#{poupancaBean.somaAno('2017')}" id="c">
+			<f:convertNumber currencySymbol="R$ " type="currency"/>
+		</h:outputText> 
+	</div>		
+	
+	</ui:define>
+	
+	
+	
+	<ui:define name="conteudo" >
+
+		
+		<p:lineChart value="#{graph.model}"  yaxisLabel="Valor"  animate="true" zoom="true"  title="Balanço Anual - Gráfico Linear" legendPosition="ne" seriesColors="FF0000, 00BFFF, DAA520, 32CD32, CD00CD "  />
+		
+		<hr />
+			
+		<p:barChart value="#{graph.model}"   yaxisLabel="Valor" animate="true" zoom="true"  title="Balanço Anual - Gráfico em Barras"  legendPosition="ne" seriesColors="FF0000, 00BFFF, DAA520, 32CD32, CD00CD" />
+				
+		</ui:define>
+	</ui:composition>
+</html>

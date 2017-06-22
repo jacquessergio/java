@@ -1,0 +1,63 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui">
+ 
+ 
+  <p:dialog modal="false" widgetVar="statusDialogPoupanca" header="Inserir Poupança" draggable="true" closable="false">
+		 	
+	 <h:form id="frmPoupanca">
+   
+    <p:panel header="Informações">
+         
+        <p:messages id="messages"  autoUpdate="true" closable="true" />
+ 
+ 		        <h:panelGrid columns="4" cellpadding="5">
+ 		        	
+ 		        	<h:outputLabel for="id" value="Id:" />
+		            <p:inputText id="id" value="#{poupanca.id}" styleClass="numero"  label="id"/>
+		            <p:message for="id"/>
+		            <h:outputText value="#{poupanca.id}" />
+ 		        
+ 		        
+		            <h:outputLabel for="name" value="Descricão:" />
+		            <p:inputText id="name" value="#{poupanca.descricao}" label="Name"/>
+		            <p:message for="name"/>
+		            <h:outputText value="#{poupanca.descricao}" />
+		            
+		             <h:outputLabel for="popup" value="Data:" />
+		             <p:calendar id="popup" value="#{poupanca.data}" pattern="yyyy-MM-dd"  mask="true" label="Data" />
+		             <p:message for="popup" />
+		             <h:outputText value="#{poupanca.data}" />
+   
+		             
+		              <h:outputLabel for="val" value="Valor(R$):" />
+		              <p:inputText id="val" styleClass="moeda" value="#{poupanca.valor}" label="Val" />
+		              <p:message for="val" />
+		              <h:outputText value="#{poupanca.valor}" />
+		          	
+			            
+		        </h:panelGrid>
+		        	<hr />
+		        <h:commandButton  value="Salvar" icon="ui-icon-check" validateClient="true">
+		        
+		        <f:ajax event="click" execute="frmPoupanca" render="@this resumo-pc" listener="#{poupancaBean.inserir(poupanca)}" />
+		        
+		        </h:commandButton>
+		        	| 
+		        <h:link onclick="hideStatus()">
+					<h:outputText value=" Fechar" />
+				</h:link>       
+		
+	     </p:panel>
+		
+		</h:form>
+				
+			 
+		</p:dialog>
+		
+</ui:composition>
+
+

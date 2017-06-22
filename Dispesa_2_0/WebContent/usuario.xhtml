@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+
+	<title>Cadastra Usuario</title>
+	<h:outputScript name="main.js" library="js" />
+</h:head>
+
+<h:body onload="reload()">
+	<h:form>
+
+		<h:panelGrid>
+
+			<h:outputLabel value="Nome: " for="id-nome">
+				<h:inputText value="#{usuarioBean.nome}"  maxlength="70" id="id-nome" />
+				<h:message for="id-nome" />
+			</h:outputLabel>
+
+			<h:outputLabel value="Email: " for="id-nome">
+				<h:inputText value="#{usuarioBean.email}" maxlength="70" id="id-email" />
+				<h:message for="id-email" />
+			</h:outputLabel>
+
+			<h:outputLabel value="Senha" for="id-senha">	
+				<h:inputSecret value="#{usuarioBean.senha}" maxlength="10" id="id-senha" />
+				<h:message for="id-senha" />
+			</h:outputLabel>
+			
+			<h:commandButton action="#{usuarioDao.inserir(usuarioBean)}"
+				value="Inserir" />
+
+		</h:panelGrid>
+
+	</h:form>
+
+</h:body>
+
+
+
+</html>

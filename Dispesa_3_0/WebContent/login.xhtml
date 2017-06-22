@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<h:head>
+
+	<title>JSF</title>
+	<h:outputStylesheet library="css" name="main.css" />
+	
+</h:head>
+
+
+<h:body>
+	
+	<div id="login">
+		
+	<h:form id="frm">
+	
+	<p:messages id="messages"  autoUpdate="true" closable="true" />
+    
+    <p:panel header="Login" id="login">
+        
+        <h:panelGrid columns="2" cellpadding="5">
+			
+		<h:outputLabel value="Usuario: " for="campo-usuario" />
+		<h:inputText  value="#{usuario.login}" id="campo-usuario" />
+		
+		<h:outputLabel value="Senha: " for="campo-senha" />
+		<h:inputSecret value="#{usuario.senha}" id="campo-senha" />
+	
+        </h:panelGrid>
+ 		
+ 		<hr />
+ 		
+        <p:commandButton action="submit" ajax="false" update="login" value="Login" icon="ui-icon-check" actionListener="#{autenticacao.autentica(usuario)}" />
+       
+    </p:panel>
+
+	</h:form>
+	
+	</div>
+	
+	
+
+</h:body>
+
+</html>

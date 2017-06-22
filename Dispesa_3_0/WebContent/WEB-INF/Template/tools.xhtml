@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	 <h:head>
+	 	<title>Controle de Dispesa</title>
+	 	<h:outputStylesheet library="css" name="main.css" />
+	 	<h:outputScript library="js" name="jquery.maskMoney.min.js" />
+	 	<h:outputScript library="js" name="jquery.mask.min.js" />
+	 	<h:outputScript library="js" name="main.js" />
+	        
+	 </h:head>
+	 
+	<p:layout fullPage="true">
+ 
+    <p:layoutUnit position="north" size="80"  header="Olá, #{sessionScope.usuario} :: Controle Financeiro versão 3.0" resizable="true" closable="true" collapsible="true">
+        
+	 <h:form>
+		<p:tabMenu activeIndex="#{param.m}">
+		    <p:menuitem value="Visão Geral" outcome="index.xhtml" icon="ui-icon-star">
+		        <f:param name="m" value="0" />
+		    </p:menuitem>
+		    <p:menuitem value="Configurações" outcome="tools.xhtml" icon="ui-icon-wrench">
+		        <f:param name="m" value="1" />
+		    </p:menuitem>
+		    <p:menuitem value="Usuários" outcome="users.xhtml" icon="ui-icon-person">
+		        <f:param name="m" value="2" />
+		    </p:menuitem>
+		    
+		     <p:menuitem value="Logout" icon="ui-icon-extlink"  action="#{autenticacao.registraSaida()}" >
+		        <f:param name="m" value="2" />
+		    </p:menuitem>
+		    
+		</p:tabMenu>
+		 </h:form>
+		    
+       
+    </p:layoutUnit>
+ 
+		 
+		 <p:layoutUnit position="south" size="35" header="Configuração do Sistema" />
+ 
+    <p:layoutUnit position="west" size="200" header="Painel de ações"  resizable="true" closable="true" collapsible="true">
+          
+        <h:form>
+		    <p:growl autoUpdate="true"/>
+		 
+		    <p:panelMenu style="width:100%" id="menu-left">
+				   
+		        	
+		                <p:submenu label="Opções" style="font-size:10px"  icon="ui-icon-plus">
+		                    <p:menuitem value="Descrição de dispesas" url="#" icon="ui-icon-home" />
+		                    <p:menuitem value="Opções do relatório" url="#" icon="ui-icon-document" />
+		                    <p:menuitem value="Temas" url="#" icon="ui-icon-arrowthick-1-s" />
+		                  
+		                </p:submenu>
+		  
+		  
+		    </p:panelMenu>
+		    		    		    
+		</h:form>
+                
+    </p:layoutUnit>
+ 
+    <p:layoutUnit position="east" size="0"  />
+ 
+    <p:layoutUnit position="center">
+    	
+       <ui:insert name="conteudo">
+       
+        //page code
+       
+       </ui:insert>
+      
+    </p:layoutUnit>
+ 
+</p:layout>
+	
+	
+</html>

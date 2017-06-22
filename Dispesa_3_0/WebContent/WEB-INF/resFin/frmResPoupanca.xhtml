@@ -1,0 +1,68 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui">
+ 
+ 
+		
+		 <!-- START - RESUMO POUPANCA -->
+		 	<h:form id="resumo-pc">
+		 	
+		 	  <p:growl id="msgs" showDetail="true"/>
+		 	
+		    	<p:dataTable id="pc" var="pc" value="#{poupancaBean.listaMes()}" editable="true" >
+				   
+				   <p:ajax event="rowEdit" listener="#{poupancaBean.inserir(pc)}" process="@all"  update="@this"  />
+			       <p:ajax event="rowEditCancel" listener="#{poupancaBean.remove(pc.id)}" process="@all"  update="@this"  />
+					
+					
+					<f:facet name="header">+poupanca(s)</f:facet>
+				
+					<p:column  headerText="Data" >
+									
+						<p:cellEditor>
+							<f:facet name="output">
+							
+							<h:outputText value="#{pc.data}">
+								<f:convertDateTime pattern="dd/MM" />
+							</h:outputText>
+							
+							</f:facet>
+						     <f:facet name="input">
+						    	<p:calendar id="popup2" value="#{pc.data}" pattern="yyyy-MM-dd"  mask="true"  />    
+						    </f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+					
+					<p:column  headerText="Valor" >
+									
+						<p:cellEditor>
+							<f:facet name="output"><h:outputText value="#{pc.valor}" /></f:facet>
+						    <f:facet name="input"><p:inputText styleClass="moeda" value="#{pc.valor}" style="width:100%"/></f:facet>
+						</p:cellEditor>
+						
+					</p:column>
+				  
+				  <p:column>
+			           <p:rowEditor />
+			     </p:column>
+			     
+			      <p:columnGroup type="footer">
+	                <p:row>
+	                    <p:column footerText="Total:" style="text-align:right"  />
+	                    <p:column footerText="#{poupancaBean.somaMes()}"  />
+	                    <p:column footerText="" />
+	                </p:row>
+			      </p:columnGroup>
+
+			</p:dataTable>
+			
+			</h:form>
+			<!-- FIM - RESUMO POUPANCA -->
+		
+</ui:composition>
+
+

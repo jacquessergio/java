@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+
+	<title>JSF</title>
+
+</h:head>
+
+<h:body>
+
+
+
+	<h1>Usuario</h1>
+
+	<h:messages globalOnly="true"/>
+	
+	<h:form>
+	
+		<h:outputLabel value="Nome: " for="campo-nome" />
+		<h:inputText value="#{cadastro.usuario.nome}" id="campo-nome" />
+		
+		<h:outputLabel value="Idade: " for="campo-idade" />
+		<h:inputText value="#{cadastro.usuario.idade}" id="campo-idade" />
+	
+		<h:commandButton value="Enviar" action="#{cadastro.adicionaUsuario()}" />
+	
+	</h:form>
+	
+	<h:dataTable value="#{cadastro.usuarios}" var="usu" rendered="#{not empty cadastro.usuarios }">
+
+		<f:facet name="header" > Usuario</f:facet>
+		
+		<h:column>
+			<f:facet name="header">Nome: </f:facet>
+			#{usu.nome}
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Idade: </f:facet>
+			#{usu.idade}
+		</h:column>
+	
+	</h:dataTable>
+	
+	<h2>Laço com lista</h2>
+	
+	<ul>
+		<ui:repeat var="usu2" value="#{cadastro.usuarios}">
+			<li>#{usu2.nome} - #{usu2.idade}</li>
+		</ui:repeat>
+	
+	
+	</ul>
+
+
+</h:body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+
+	<title>Controle | Dispesas 2.0</title>
+	<h:outputStylesheet name="main.css" library="css" />
+	<h:outputScript name="main.js" library="js" />
+</h:head>
+
+<h:body>
+
+	<div id="header">
+		<h:link outcome="index">
+			<h:outputText value="Início" />
+		</h:link>
+		|
+		<h:link outcome="relatorio">
+			<h:outputText value="Relatório" />
+		</h:link>
+	</div>
+
+	<div id="content">
+
+		<ui:insert name="conteudo">Conteudo</ui:insert>
+
+	</div>
+
+	<div id="footer">Controle de Dispesas versão 2.0 - JSF e JPA</div>
+
+</h:body>
+
+
+</html>
